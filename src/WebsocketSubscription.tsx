@@ -1,20 +1,19 @@
-import * as WebSocket from 'isomorphic-ws';
+import WebSocket from 'isomorphic-ws';
 import * as React from 'react';
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-type StateMapper<D> = (data: D|null, readyState: number) => object;
+type StateMapper<D, T> = (data: D|null, readyState: number) => T;
 export function withWebsocketSubscription
     <
-        D,
-        R extends { data?: D, readyState?: number, websocketContext?: WebSocket },
-        S = Omit<R, 'data'|'readyState'>,
+        DataType,
+        PropTypes extends { websocketContext: WebSocket },
+        ComputedProps
     >(
-        Component: React.ComponentClass<R> | React.StatelessComponent<R>,
-        DataExactor: (data: WebSocket.Data) => (D | null),
-        Mapper?: StateMapper<D>
-    ): React.SFC<S> {
-    return function applyWebsocketSubscription(props: S & { websocketContext: WebSocket }) {
-        const [data, setData] = React.useState<D | null>(null);
+        Component: React.ComponentClass<PropTypes> | React.StatelessComponent<PropTypes>,
+        DataExactor: (data: WebSocket.Data) => (DataType | null),
+        Mapper: StateMapper<DataType, ComputedProps>
+    ): React.SFC<Exclude<PropTypes, ComputedProps>> {
+    return function applyWebsocketSubscription(props: Exclude<PropTypes, ComputedProps>) {
+        const [data, setData] = React.useState<DataType | null>(null);
         React.useEffect(() => {
             const cb = (wsData: WebSocket.Data) => {
                 const d = DataExactor(wsData);
@@ -31,9 +30,7 @@ export function withWebsocketSubscription
                 return () => { props.websocketContext.removeEventListener('message', delegateCb); }
             }
         }, [props.websocketContext])
-        const noop: StateMapper<D> = (d: D, r: number) => ({data: d, readyState: r});
-        const mapper: StateMapper<D> = Mapper ? Mapper :noop;
-        const computedProps = mapper(data, props.websocketContext.readyState);
+        const computedProps = Mapper(data, props.websocketContext.readyState);
         return (
             <Component {...props as any} {...computedProps} />
         )
