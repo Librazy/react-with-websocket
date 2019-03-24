@@ -1,9 +1,16 @@
+import * as WebSocket from 'isomorphic-ws';
 import * as React from 'react';
 import './App.css';
 
 import logo from './logo.svg';
 
-class App extends React.Component {
+export interface IAppProps {
+  data: string;
+  readyState: number;
+  websocketContext: WebSocket;
+}
+
+class App extends React.Component<IAppProps> {
   public render() {
     return (
       <div className="App">
@@ -12,7 +19,7 @@ class App extends React.Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
+          WebSocket is {this.props.readyState} and newest data is {this.props.data}
         </p>
       </div>
     );
