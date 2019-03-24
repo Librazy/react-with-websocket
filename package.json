@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "isomorphic-ws": "^4.0.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-scripts-ts": "3.1.0"
+    "react-scripts-ts": "^4.0.8",
+    "webpack-dev-server": "^3.2.1",
+    "ws": "^6.2.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -14,6 +17,7 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
+    "@types/ws": "^6.0.1",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.11.6",
     "@types/react": "^16.8.8",
