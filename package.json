@@ -2,7 +2,14 @@
   "name": "react-with-websocket",
   "main": "index.ts",
   "version": "0.1.1",
+  "maintainers": [
+    "Liqueur Librazy <librazy0598@gmail.com> (https://im.librazy.org/)"
+  ],
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Librazy/react-with-websocket/issues"
+  },
+  "homepage": "https://github.com/Librazy/react-with-websocket",
   "dependencies": {
     "isomorphic-ws": "^4.0.1",
     "react": "^16.8.5",
@@ -10,6 +17,17 @@
     "react-scripts": "^2.1.8",
     "ws": "^6.2.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Librazy/react-with-websocket.git"
+  },
+  "keywords": [
+    "reactjs",
+    "websocket",
+    "react",
+    "react-hook",
+    "higher-order-component"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
