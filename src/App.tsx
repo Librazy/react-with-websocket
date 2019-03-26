@@ -7,7 +7,7 @@ import logo from './logo.svg';
 export interface IAppProps {
   data: string;
   readyState: number;
-  websocketContext: WebSocket;
+  t: string;
 }
 
 class App extends React.Component<IAppProps> {
@@ -19,7 +19,7 @@ class App extends React.Component<IAppProps> {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          WebSocket is {this.props.readyState} and newest data is {this.props.data}
+          WebSocket is {this.props.readyState} and newest data is {this.props.data}. {this.props.t}
         </p>
       </div>
     );

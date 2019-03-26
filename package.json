@@ -1,7 +1,7 @@
 {
   "name": "react-with-websocket",
   "main": "index.ts",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "maintainers": [
     "Liqueur Librazy <librazy0598@gmail.com> (https://im.librazy.org/)"
   ],
