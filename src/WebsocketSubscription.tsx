@@ -1,36 +1,82 @@
 import WebSocket from 'isomorphic-ws';
 import * as React from 'react';
 
-type StateMapper<D, T> = (data: D|null, readyState: number) => T;
+export interface ICloseEvent {
+    eventType: "close";
+    wasClean: boolean;
+    code: number;
+    reason: string;
+    target: WebSocket;
+}
+
+export interface IErrorEvent {
+    eventType: "error";
+    error: any;
+    message: any;
+    type: string;
+    target: WebSocket;
+}
+
+export interface IOpenEvent {
+    eventType: "open";
+    target: WebSocket;
+}
+
+export interface IMessageEvent {
+    eventType: "message";
+    data: WebSocket.Data;
+    type: string;
+    target: WebSocket;
+}
+type StateUpdater<StateType> = StateType | ((prevState: StateType) => StateType)
+type StateExactor<EventType, StateType> = (event: EventType) => (StateUpdater<StateType> | null);
+type StateToPropMapper<StateType, ComputedPropType> = (data: StateType | null, websocket: WebSocket) => ComputedPropType;
+
+const makeCallBack =
+    function <EventType extends {eventType: string}, StateType>(
+        exactor: StateExactor<EventType, StateType>,
+        receiver: (state: StateUpdater<StateType>) => void
+    )
+        : (eventType: string) => (event: EventType) => void {
+        return (eventType: string) => (event: EventType) => {
+            event.eventType = eventType;
+            const d = exactor(event);
+            if (d !== null) {
+                receiver(d);
+            }
+        }
+    }
+
 export function withWebsocketSubscription
     <
-        DataType,
-        PropTypes extends { websocketContext: WebSocket },
-        ComputedProps
+        StateType,
+        InheritPropType extends { websocketContext: WebSocket },
+        ComputedPropType
     >(
-        Component: React.ComponentClass<PropTypes> | React.StatelessComponent<PropTypes>,
-        DataExactor: (data: WebSocket.Data) => (DataType | null),
-        Mapper: StateMapper<DataType, ComputedProps>
-    ): React.SFC<Exclude<PropTypes, ComputedProps>> {
-    return function applyWebsocketSubscription(props: Exclude<PropTypes, ComputedProps>) {
-        const [data, setData] = React.useState<DataType | null>(null);
+        Component: React.ComponentClass<InheritPropType> | React.StatelessComponent<InheritPropType>,
+        stateMapper: StateToPropMapper<StateType, ComputedPropType>,
+        messageExactor: (message: IMessageEvent) => (StateType | null),
+        eventExactor: (event: ICloseEvent | IOpenEvent | IErrorEvent) => (StateType | null) = (_) => null,
+): React.FunctionComponent<Exclude<InheritPropType, ComputedPropType>> {
+    return function applyWebsocketSubscription(props: Exclude<InheritPropType, ComputedPropType>) {
+        const [data, setData] = React.useState<StateType | null>(null);
         React.useEffect(() => {
-            const cb = (wsData: WebSocket.Data) => {
-                const d = DataExactor(wsData);
-                if (d !== null) {
-                    setData(d);
-                }
-            };
-            const delegateCb = (event : any|MessageEvent) => cb(event.data);
-            if (props.websocketContext.addListener) {
-                props.websocketContext.addListener('message', cb);
-                return () => { props.websocketContext.removeListener('message', cb); }
-            } else {
-                props.websocketContext.addEventListener('message', delegateCb);
-                return () => { props.websocketContext.removeEventListener('message', delegateCb); }
+            const messageCb = makeCallBack(messageExactor, setData);
+            props.websocketContext.addEventListener('message', messageCb('message') as (_: any) => void);
+            return () => { props.websocketContext.removeEventListener('message', messageCb('message') as (_: any) => void); }
+        }, [props.websocketContext])
+        React.useEffect(() => {
+            const eventCb = makeCallBack(eventExactor, setData);
+            props.websocketContext.addEventListener('open', eventCb('open') as (_: any) => void);
+            props.websocketContext.addEventListener('close', eventCb('close') as (_: any) => void);
+            props.websocketContext.addEventListener('error', eventCb('error') as () => void);
+            return () => { 
+                props.websocketContext.removeEventListener('open', eventCb('open') as () => void);
+                props.websocketContext.removeEventListener('close', eventCb('close') as () => void);
+                props.websocketContext.removeEventListener('error', eventCb('error') as () => void);
             }
         }, [props.websocketContext])
-        const computedProps = Mapper(data, props.websocketContext.readyState);
+        const computedProps = stateMapper(data, props.websocketContext);
         return (
             <Component {...props as any} {...computedProps} />
         )

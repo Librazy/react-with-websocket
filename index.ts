@@ -1,4 +1,2 @@
-import { withWebsocket } from './src/WebsocketContext'
-import { withWebsocketSubscription } from './src/WebsocketSubscription'
-
-export default { withWebsocket, withWebsocketSubscription };
+export { WebsocketContext, WebsocketContextConsumer, WebsocketContextProvider, withWebsocket } from './src/WebsocketContext'
+export { withWebsocketSubscription } from './src/WebsocketSubscription'
