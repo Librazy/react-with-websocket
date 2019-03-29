@@ -3,8 +3,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
-import { WebsocketContextProvider, withWebsocket } from './WebsocketContext';
-import { withWebsocketSubscription } from './WebsocketSubscription';
+import { WebsocketContextProvider, withWebsocket } from './lib/WebsocketContext';
+import { withWebsocketSubscription } from './lib/WebsocketSubscription';
 
 const ws = new WebSocket("wss://sandbox.kaazing.net/echo")
 const AppWithSub = withWebsocketSubscription(
