@@ -1,51 +1,64 @@
 {
   "name": "react-with-websocket",
-  "main": "index.ts",
-  "version": "0.3.0",
-  "maintainers": [
-    "Liqueur Librazy <librazy0598@gmail.com> (https://im.librazy.org/)"
-  ],
+  "version": "1.0.0",
+  "description": "",
+  "author": "Librazy",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Librazy/react-with-websocket/issues"
+  "repository": "Librazy/react-with-websocket",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
   },
-  "homepage": "https://github.com/Librazy/react-with-websocket",
-  "dependencies": {
-    "isomorphic-ws": "^4.0.1",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5",
-    "ws": "^6.2.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Librazy/react-with-websocket.git"
-  },
-  "keywords": [
-    "reactjs",
-    "websocket",
-    "react",
-    "react-hook",
-    "higher-order-component"
-  ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "cross-env CI=1 react-scripts-ts test --env=jsdom",
+    "test:watch": "react-scripts-ts test --env=jsdom",
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "prepare": "yarn run build",
+    "predeploy": "cd example && yarn install && yarn run build",
+    "deploy": "gh-pages -d example/build"
+  },
+  "dependencies": {
+    "isomorphic-ws": "^4.0.1"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@svgr/rollup": "^4.1.0",
     "@types/jest": "^24.0.11",
-    "@types/node": "^11.11.6",
-    "@types/react": "^16.8.8",
+    "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
     "@types/ws": "^6.0.1",
-    "react-scripts": "^2.1.8",
-    "typescript": "^3.3.4000"
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-runtime": "^6.26.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.15.3",
+    "eslint-plugin-react": "^7.12.4",
+    "gh-pages": "^2.0.1",
+    "prettier": "^1.16.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts-ts": "^3.1.0",
+    "rollup": "^1.7.4",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.2.2",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-typescript2": "^0.20.1",
+    "rollup-plugin-url": "^2.2.0",
+    "tslint": "^5.14.0",
+    "typescript": "3.3.4000",
+    "ws": "^6.2.1"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
+  "files": [
+    "dist"
   ]
 }

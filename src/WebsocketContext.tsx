@@ -1,5 +1,5 @@
-import WebSocket from 'isomorphic-ws';
-import * as React from 'react';
+import * as WebSocket from 'isomorphic-ws'
+import * as React from 'react'
 
 export const WebsocketContext = React.createContext<WebSocket>({} as WebSocket);
 

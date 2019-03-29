@@ -1,0 +1,8 @@
+{
+  "short_name": "react-with-websocket",
+  "name": "react-with-websocket",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
