@@ -1,6 +1,6 @@
 {
   "name": "react-with-websocket",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "",
   "author": "Librazy",
   "license": "MIT",
@@ -22,25 +22,24 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "isomorphic-ws": "^4.0.1",
-    "ws": "^6.2.1"
+    "@types/ws": "^6.0.1"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "ws": "^6.2.1"
   },
   "devDependencies": {
     "@svgr/rollup": "^4.1.0",
     "@types/jest": "^24.0.11",
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
-    "@types/ws": "^6.0.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
     "babel-runtime": "^6.26.0",
     "cross-env": "^5.2.0",
-    "eslint": "^5.15.3",
+    "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.12.4",
     "gh-pages": "^2.0.1",
     "prettier": "^1.16.4",

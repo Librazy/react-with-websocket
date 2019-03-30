@@ -1,36 +1,37 @@
-import * as WebSocket from 'isomorphic-ws'
 import * as React from 'react'
+import { IWebSocket, IWebSocketData } from './ws'
 
-export interface ICloseEvent {
+export interface ICloseEvent<TWebsocket> {
     eventType: "close";
     wasClean: boolean;
     code: number;
     reason: string;
-    target: WebSocket;
+    target: TWebsocket;
 }
 
-export interface IErrorEvent {
+export interface IErrorEvent<TWebsocket> {
     eventType: "error";
     error: any;
     message: any;
     type: string;
-    target: WebSocket;
+    target: TWebsocket;
 }
 
-export interface IOpenEvent {
+export interface IOpenEvent<TWebsocket> {
     eventType: "open";
-    target: WebSocket;
+    target: TWebsocket;
 }
 
-export interface IMessageEvent {
+export interface IMessageEvent<TWebsocket> {
     eventType: "message";
-    data: WebSocket.Data;
+    data: IWebSocketData;
     type: string;
-    target: WebSocket;
+    target: TWebsocket;
 }
-type StateUpdater<StateType> = StateType | ((prevState: StateType) => StateType)
-type StateExactor<EventType, StateType> = (event: EventType) => (StateUpdater<StateType> | null);
-type StateToPropMapper<StateType, ComputedPropType> = (data: StateType | null, websocket: WebSocket) => ComputedPropType | null;
+
+export type StateUpdater<StateType> = StateType | ((prevState: StateType) => StateType);
+export type StateExactor<EventType, StateType> = (event: EventType) => (StateUpdater<StateType> | null);
+export type StateToPropMapper<StateType, ComputedPropType, WebsocketType> = (data: StateType | null, websocket: WebsocketType) => ComputedPropType | null;
 
 const makeCallBack =
     function <EventType extends { eventType: string }, StateType>(
@@ -47,34 +48,36 @@ const makeCallBack =
         }
     }
 
-type Delta<T1, T2> = { [P in Exclude<keyof T1, keyof T2>]: T1[P] }
+export type Delta<T1, T2> = { [P in Exclude<keyof T1, keyof T2>]: T1[P] }
 
-export function withWebsocketSubscription
+export function withSubscription
     <
         StateType,
         InheritPropType,
         ComputedPropType,
+        WebsocketType extends IWebSocket = IWebSocket,
         PropType
         extends
-        Delta<InheritPropType, ComputedPropType> & { websocketContext: WebSocket } =
-        Delta<InheritPropType, ComputedPropType> & { websocketContext: WebSocket }
+        Delta<InheritPropType, ComputedPropType> & { websocketContext: WebsocketType } =
+        Delta<InheritPropType, ComputedPropType> & { websocketContext: WebsocketType }
     >(
         Component: React.ComponentClass<InheritPropType> | React.StatelessComponent<InheritPropType>,
         initState: StateType,
         fallbackProps: ComputedPropType,
-        stateMapper: StateToPropMapper<StateType, ComputedPropType>,
-        messageExactor: (message: IMessageEvent) => (StateType | null),
-        eventExactor: (event: ICloseEvent | IOpenEvent | IErrorEvent) => (StateType | null) = (_) => null,
+        mapStateToProps: StateToPropMapper<StateType, ComputedPropType, WebsocketType>,
+        mapMessageToState: (message: IMessageEvent<WebsocketType>) => (StateType | null),
+        mapEventToState: (event: ICloseEvent<WebsocketType> | IOpenEvent<WebsocketType> | IErrorEvent<WebsocketType>)
+            => (StateType | null) = (_) => null,
 ): React.FunctionComponent<PropType> {
-    return function applyWebsocketSubscription(props: PropType) {
+    return function withSubscription(props: PropType) {
         const [data, setData] = React.useState<StateType>(initState);
         React.useEffect(() => {
-            const messageCb = makeCallBack(messageExactor, setData);
+            const messageCb = makeCallBack(mapMessageToState, setData);
             props.websocketContext.addEventListener('message', messageCb('message') as (_: any) => void);
             return () => { props.websocketContext.removeEventListener('message', messageCb('message') as (_: any) => void); }
         }, [props.websocketContext])
         React.useEffect(() => {
-            const eventCb = makeCallBack(eventExactor, setData);
+            const eventCb = makeCallBack(mapEventToState, setData);
             props.websocketContext.addEventListener('open', eventCb('open') as (_: any) => void);
             props.websocketContext.addEventListener('close', eventCb('close') as (_: any) => void);
             props.websocketContext.addEventListener('error', eventCb('error') as () => void);
@@ -84,7 +87,7 @@ export function withWebsocketSubscription
                 props.websocketContext.removeEventListener('error', eventCb('error') as () => void);
             }
         }, [props.websocketContext])
-        const computedProps = stateMapper(data, props.websocketContext) || fallbackProps;
+        const computedProps = mapStateToProps(data, props.websocketContext) || fallbackProps;
         return (
             <Component {...props as any} {...computedProps} />
         )
