@@ -1,23 +1,51 @@
 {
   "compilerOptions": {
-    "outDir": "build",
-    "module": "esnext",
-    "target": "es5",
-    "lib": ["es6", "dom", "es2016", "es2017"],
+    "outDir": "./dist/",
     "sourceMap": true,
-    "allowJs": false,
+    "strictNullChecks": true,
+    "module": "esnext",
     "jsx": "react",
+    "target": "esnext",
     "declaration": true,
+    "lib": [
+      "es6",
+      "es7",
+      "es2017",
+      "dom",
+      "esnext"
+    ],
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "rootDir": "src",
+    "removeComments": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "typeRoots" : ["node_modules/@types", "src/typings"],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["*"],
+      "@/*": ["src/*"]
+    },
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": ["styled"]
+      }
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
+  ],
+  "exclude": [
+    "./src/**/*.spec.ts",
+    "./src/**/*.spec.tsx",
+    "node_modules"
+  ]
 }

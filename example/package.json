@@ -10,7 +10,7 @@
     "react-with-websocket": "link:.."
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cd .. && yarn build && cd ./example/ && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

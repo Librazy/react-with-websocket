@@ -1,0 +1,53 @@
+{
+  "extends": [
+    "tslint-config-airbnb",
+    "tslint-sonarts",
+    "tslint-config-prettier"
+  ],
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "rules": {
+    "no-trailing-whitespace": true,
+    "semicolon": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "always",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true,
+        "singleline": "never"
+      }
+    ],
+    "strict-boolean-expressions": false,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case"
+    ],
+    "no-this-assignment": [
+      true,
+      {
+        "allow-destructuring": true
+      }
+    ],
+    "import-name": false,
+    "align": [true, "parameters"],
+    "no-console": [true, "log", "info"],
+    "max-line-length": [
+      true,
+      140
+    ],
+    "prettier": true,
+    "no-duplicate-string": [true, 5],
+    "no-extra-semicolon": false
+  },
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**/*.ts"
+    ]
+  }
+}

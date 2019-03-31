@@ -1,3 +1,18 @@
 import { createWebsocketContext } from './WebsocketContext'
-export { withSubscription } from './WebsocketSubscription'
 export default createWebsocketContext
+
+const {
+    WebsocketContext,
+    WebsocketContextConsumer,
+    WebsocketContextProvider,
+    withWebsocket,
+    withSubscription,
+} = createWebsocketContext<WebSocket>()
+
+export {
+    WebsocketContext,
+    WebsocketContextConsumer,
+    WebsocketContextProvider,
+    withWebsocket,
+    withSubscription,
+}

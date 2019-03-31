@@ -1,10 +1,20 @@
 {
   "name": "react-with-websocket",
-  "version": "2.0.0",
-  "description": "",
+  "version": "2.1.0",
+  "description": "Higher order compoments for better experience in React with websocket.",
   "author": "Librazy",
+  "maintainers": [
+    "Liqueur Librazy <librazy0598@gmail.com> (https://im.librazy.org/)"
+  ],
+  "bugs": {
+    "url": "https://github.com/Librazy/react-with-websocket/issues"
+  },
+  "homepage": "https://github.com/Librazy/react-with-websocket",
   "license": "MIT",
-  "repository": "Librazy/react-with-websocket",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Librazy/react-with-websocket.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
@@ -21,14 +31,12 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
-  "dependencies": {
-    "@types/ws": "^6.0.1"
-  },
   "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "ws": "^6.2.1"
+    "ws": "^6.2.1",
+    "@types/ws": "^6.0.1"
   },
   "devDependencies": {
     "@svgr/rollup": "^4.1.0",
@@ -55,7 +63,7 @@
     "rollup-plugin-typescript2": "^0.20.1",
     "rollup-plugin-url": "^2.2.0",
     "tslint": "^5.14.0",
-    "typescript": "3.3.4000"
+    "typescript": "3.4"
   },
   "files": [
     "dist"

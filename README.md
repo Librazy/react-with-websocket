@@ -1,3 +1,3 @@
 # React withWebsocket
 
-A high order compoment for better experience in React with websocket.
+Higher order compoments for better experience in React with websocket.
