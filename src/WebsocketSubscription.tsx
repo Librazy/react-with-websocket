@@ -88,11 +88,11 @@ export function subscribe<
         webSocketContext: WebSocketType
     }
 > {
-    return (
+    return function withSubscription(
         props: Delta<InheritPropType, ComputedPropType> & {
             webSocketContext: WebSocketType
         },
-    ) => {
+    ) {
         const [data, setData] = React.useState<StateType>(initState)
         React.useEffect(() => {
             const messageCb = makeCallBack(mapMessageToState, setData)

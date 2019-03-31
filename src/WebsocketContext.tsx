@@ -31,7 +31,7 @@ export function createWebSocketContext<WebSocketType extends IWebSocket>() {
         R = Omit<P, 'webSocketContext'>
     >(
         Component: React.ComponentType<P>,
-    ): React.ComponentType<R> => (props: R): React.ReactElement => {
+    ): React.ComponentType<R> => function withWebSocket(props: R): React.ReactElement {
         const value = React.useContext(WebSocketContext)
         return <Component {...props as any} webSocketContext={value} />
     }
