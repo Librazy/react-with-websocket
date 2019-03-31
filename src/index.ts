@@ -1,4 +1,4 @@
-import { createWebSocketContext } from './WebSocketContext'
+import { createWebSocketContext } from './Context'
 export default createWebSocketContext
 
 const {

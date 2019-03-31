@@ -15,7 +15,7 @@
         "type": "git",
         "url": "git@github.com:Librazy/react-with-websocket.git"
     },
-    "keywords": [ 
+    "keywords": [
         "react",
         "react-components",
         "higher-order-component",
@@ -31,7 +31,7 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "prepare": "yarn run build"
+        "prepare": "yarn run rimraf ./dist && yarn run build"
     },
     "peerDependencies": {
         "react": "^16.8.6",
@@ -55,6 +55,7 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-scripts-ts": "^3.1.0",
+        "rimraf": "^2.6.3",
         "rollup": "^1.7.4",
         "rollup-plugin-babel": "^4.3.2",
         "rollup-plugin-commonjs": "^9.2.2",

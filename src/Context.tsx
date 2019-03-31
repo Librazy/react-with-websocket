@@ -8,7 +8,7 @@ import {
     IOpenEvent,
     IErrorEvent,
     Delta,
-} from './WebSocketSubscription'
+} from './Subscription'
 
 export function createWebSocketContext<WebSocketType extends IWebSocket>() {
     const WebSocketContext = React.createContext<WebSocketType>(
@@ -31,10 +31,11 @@ export function createWebSocketContext<WebSocketType extends IWebSocket>() {
         R = Omit<P, 'webSocketContext'>
     >(
         Component: React.ComponentType<P>,
-    ): React.ComponentType<R> => function withWebSocket(props: R): React.ReactElement {
-        const value = React.useContext(WebSocketContext)
-        return <Component {...props as any} webSocketContext={value} />
-    }
+    ): React.ComponentType<R> =>
+        function withWebSocket(props: R): React.ReactElement {
+            const value = React.useContext(WebSocketContext)
+            return <Component {...props as any} webSocketContext={value} />
+        }
 
     function subscribe<StateType, InheritPropType, ComputedPropType>(
         Component: React.ComponentType<InheritPropType>,
