@@ -1,71 +1,76 @@
 {
-  "name": "react-with-websocket",
-  "version": "2.1.0",
-  "description": "Higher order compoments for better experience in React with websocket.",
-  "author": "Librazy",
-  "maintainers": [
-    "Liqueur Librazy <librazy0598@gmail.com> (https://im.librazy.org/)"
-  ],
-  "bugs": {
-    "url": "https://github.com/Librazy/react-with-websocket/issues"
-  },
-  "homepage": "https://github.com/Librazy/react-with-websocket",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Librazy/react-with-websocket.git"
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
-  "engines": {
-    "node": ">=8",
-    "npm": ">=5"
-  },
-  "scripts": {
-    "test": "cross-env CI=1 react-scripts-ts test --env=jsdom",
-    "test:watch": "react-scripts-ts test --env=jsdom",
-    "build": "rollup -c",
-    "start": "rollup -c -w",
-    "prepare": "yarn run build",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "ws": "^6.2.1",
-    "@types/ws": "^6.0.1"
-  },
-  "devDependencies": {
-    "@svgr/rollup": "^4.1.0",
-    "@types/jest": "^24.0.11",
-    "@types/react": "^16.8.10",
-    "@types/react-dom": "^16.8.3",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^10.0.1",
-    "babel-runtime": "^6.26.0",
-    "cross-env": "^5.2.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.12.4",
-    "gh-pages": "^2.0.1",
-    "prettier": "^1.16.4",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts-ts": "^3.1.0",
-    "rollup": "^1.7.4",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-commonjs": "^9.2.2",
-    "rollup-plugin-node-resolve": "^4.0.1",
-    "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-postcss": "^2.0.3",
-    "rollup-plugin-typescript2": "^0.20.1",
-    "rollup-plugin-url": "^2.2.0",
-    "tslint": "^5.14.0",
-    "typescript": "3.4"
-  },
-  "files": [
-    "dist"
-  ]
+    "name": "react-with-websocket",
+    "version": "3.0.0",
+    "description": "Higher order compoments for better experience in React with websocket.",
+    "author": "Librazy",
+    "maintainers": [
+        "Liqueur Librazy <librazy0598@gmail.com> (https://im.librazy.org/)"
+    ],
+    "bugs": {
+        "url": "https://github.com/Librazy/react-with-websocket/issues"
+    },
+    "homepage": "https://github.com/Librazy/react-with-websocket",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:Librazy/react-with-websocket.git"
+    },
+    "keywords": [ 
+        "react",
+        "react-components",
+        "higher-order-component",
+        "websocket"
+    ],
+    "main": "dist/index.js",
+    "module": "dist/index.es.js",
+    "jsnext:main": "dist/index.es.js",
+    "engines": {
+        "node": ">=8",
+        "npm": ">=5"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "start": "rollup -c -w",
+        "prepare": "yarn run build"
+    },
+    "peerDependencies": {
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6"
+    },
+    "devDependencies": {
+        "@svgr/rollup": "^4.1.0",
+        "@types/react": "^16.8.10",
+        "@types/react-dom": "^16.8.3",
+        "babel-core": "^6.26.3",
+        "babel-eslint": "^10.0.1",
+        "babel-runtime": "^6.26.0",
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-prettier": "^4.1.0",
+        "eslint-plugin-prettier": "^3.0.1",
+        "eslint-plugin-react": "^7.12.4",
+        "eslint-plugin-sonarjs": "^0.3.0",
+        "lint-staged": "^8.1.5",
+        "prettier": "^1.16.4",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-scripts-ts": "^3.1.0",
+        "rollup": "^1.7.4",
+        "rollup-plugin-babel": "^4.3.2",
+        "rollup-plugin-commonjs": "^9.2.2",
+        "rollup-plugin-node-resolve": "^4.0.1",
+        "rollup-plugin-peer-deps-external": "^2.2.0",
+        "rollup-plugin-postcss": "^2.0.3",
+        "rollup-plugin-typescript2": "^0.20.1",
+        "rollup-plugin-url": "^2.2.0",
+        "tslint": "^5.14.0",
+        "tslint-config-airbnb": "^5.11.1",
+        "tslint-config-prettier": "^1.18.0",
+        "tslint-plugin-prettier": "^2.0.1",
+        "tslint-sonarts": "^1.9.0",
+        "typescript": "^3.4"
+    },
+    "files": [
+        "dist"
+    ]
 }

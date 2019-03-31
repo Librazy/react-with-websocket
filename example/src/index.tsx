@@ -2,40 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import {
-    WebsocketContextProvider,
-    withWebsocket,
-    withSubscription,
-} from 'react-with-websocket'
-// import WebSocket from "isomorphic-ws";
+import { WebSocketContextProvider } from 'react-with-websocket'
 
 const ws = new WebSocket('wss://sandbox.kaazing.net/echo')
 
-const AppWithSub = withSubscription(
-    App,
-    '',
-    { data: '', readyState: -1 },
-    (d, ws) => ({ data: d || '', readyState: ws.readyState }),
-    message => message.data.toString(),
-    event => {
-        if (event.eventType === 'close') {
-            return 'closed! ' + event.reason
-        }
-        if (event.eventType === 'open') {
-            return 'opened!'
-        }
-        if (event.eventType === 'error') {
-            return 'error! ' + (event.message || '').toString()
-        }
-        return ''
-    },
-)
-
-const AppWithWs = withWebsocket(AppWithSub)
 ReactDOM.render(
-    <WebsocketContextProvider value={ws}>
-        <AppWithWs t={'1'} />
-    </WebsocketContextProvider>,
+    <WebSocketContextProvider value={ws}>
+        <App t="1" />
+    </WebSocketContextProvider>,
     document.getElementById('root') as HTMLElement,
 )
 ws.onopen = () => {

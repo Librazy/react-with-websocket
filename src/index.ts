@@ -1,18 +1,22 @@
-import { createWebsocketContext } from './WebsocketContext'
-export default createWebsocketContext
+import { createWebSocketContext } from './WebSocketContext'
+export default createWebSocketContext
 
 const {
-    WebsocketContext,
-    WebsocketContextConsumer,
-    WebsocketContextProvider,
-    withWebsocket,
-    withSubscription,
-} = createWebsocketContext<WebSocket>()
+    WebSocketContext,
+    WebSocketContextConsumer,
+    WebSocketContextProvider,
+    withWebSocket,
+    createSubscription,
+    createWebSocketSubscription,
+    subscribe,
+} = createWebSocketContext<WebSocket>()
 
 export {
-    WebsocketContext,
-    WebsocketContextConsumer,
-    WebsocketContextProvider,
-    withWebsocket,
-    withSubscription,
+    WebSocketContext,
+    WebSocketContextConsumer,
+    WebSocketContextProvider,
+    withWebSocket,
+    createSubscription,
+    createWebSocketSubscription,
+    subscribe,
 }

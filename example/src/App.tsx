@@ -1,12 +1,32 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
+import { createWebSocketSubscription } from 'react-with-websocket'
 
 export interface IAppProps {
     data: string
     readyState: number
     t: string
 }
+
+const withWebsocketSubscription = createWebSocketSubscription(
+    '',
+    { data: '', readyState: -1 },
+    (d, ws) => ({ data: d || '', readyState: ws.readyState }),
+    message => message.data.toString(),
+    event => {
+        if (event.eventType === 'close') {
+            return `closed! ${event.reason}`
+        }
+        if (event.eventType === 'open') {
+            return 'opened!'
+        }
+        if (event.eventType === 'error') {
+            return `error! ${(event.message || '').toString()}`
+        }
+        return ''
+    },
+)
 
 class App extends React.Component<IAppProps> {
     public render() {
@@ -25,4 +45,4 @@ class App extends React.Component<IAppProps> {
     }
 }
 
-export default App
+export default withWebsocketSubscription(App)

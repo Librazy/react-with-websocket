@@ -1,51 +1,43 @@
 import * as React from 'react'
 import { IWebSocket } from './ws'
 import {
-    withSubscription as withSubscriptionTyped,
+    subscribe as subscribeTyped,
     StateToPropMapper,
     IMessageEvent,
     ICloseEvent,
     IOpenEvent,
     IErrorEvent,
     Delta,
-} from './WebsocketSubscription'
+} from './WebSocketSubscription'
 
-export function createWebsocketContext<WebSocketType extends IWebSocket>() {
-    const WebsocketContext = React.createContext<WebSocketType>(
+export function createWebSocketContext<WebSocketType extends IWebSocket>() {
+    const WebSocketContext = React.createContext<WebSocketType>(
         {} as WebSocketType,
     )
 
-    const WebsocketContextProvider = WebsocketContext.Provider
+    const WebSocketContextProvider = WebSocketContext.Provider
 
-    const WebsocketContextConsumer = WebsocketContext.Consumer
+    const WebSocketContextConsumer = WebSocketContext.Consumer
 
     type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-    function withWebsocket<
-        P extends { websocketContext: WebSocketType },
-        R = Omit<P, 'websocketContext'>
+    type EventTypes =
+        | ICloseEvent<WebSocketType>
+        | IOpenEvent<WebSocketType>
+        | IErrorEvent<WebSocketType>
+
+    const withWebSocket = <
+        P extends { webSocketContext: WebSocketType },
+        R = Omit<P, 'webSocketContext'>
     >(
-        Component: React.ComponentClass<P> | React.StatelessComponent<P>,
-    ): React.FunctionComponent<R> {
-        return function withWebsocket(props: R) {
-            const value = React.useContext(WebsocketContext)
-            return <Component {...props as any} websocketContext={value} />
-        }
+        Component: React.ComponentType<P>,
+    ): React.ComponentType<R> => (props: R): React.ReactElement => {
+        const value = React.useContext(WebSocketContext)
+        return <Component {...props as any} webSocketContext={value} />
     }
 
-    function withSubscription<
-        StateType,
-        InheritPropType,
-        ComputedPropType,
-        PropType extends Delta<InheritPropType, ComputedPropType> & {
-            websocketContext: WebSocketType
-        } = Delta<InheritPropType, ComputedPropType> & {
-            websocketContext: WebSocketType
-        }
-    >(
-        Component:
-            | React.ComponentClass<InheritPropType>
-            | React.StatelessComponent<InheritPropType>,
+    function subscribe<StateType, InheritPropType, ComputedPropType>(
+        Component: React.ComponentType<InheritPropType>,
         initState: StateType,
         fallbackProps: ComputedPropType,
         mapStateToProps: StateToPropMapper<
@@ -56,19 +48,13 @@ export function createWebsocketContext<WebSocketType extends IWebSocket>() {
         mapMessageToState: (
             message: IMessageEvent<WebSocketType>,
         ) => StateType | null,
-        mapEventToState: (
-            event:
-                | ICloseEvent<WebSocketType>
-                | IOpenEvent<WebSocketType>
-                | IErrorEvent<WebSocketType>,
-        ) => StateType | null = _ => null,
+        mapEventToState: (event: EventTypes) => StateType | null = _ => null,
     ) {
-        return withSubscriptionTyped<
+        return subscribeTyped<
             StateType,
             InheritPropType,
             ComputedPropType,
-            WebSocketType,
-            PropType
+            WebSocketType
         >(
             Component,
             initState,
@@ -79,11 +65,71 @@ export function createWebsocketContext<WebSocketType extends IWebSocket>() {
         )
     }
 
+    function createSubscription<StateType, ComputedPropType>(
+        initState: StateType,
+        fallbackProps: ComputedPropType,
+        mapStateToProps: StateToPropMapper<
+            StateType,
+            ComputedPropType,
+            WebSocketType
+        >,
+        mapMessageToState: (
+            message: IMessageEvent<WebSocketType>,
+        ) => StateType | null,
+        mapEventToState: (event: EventTypes) => StateType | null = _ => null,
+    ) {
+        return function withSubscription<InheritPropType>(
+            Component: React.ComponentType<InheritPropType>,
+        ) {
+            return subscribe<StateType, InheritPropType, ComputedPropType>(
+                Component,
+                initState,
+                fallbackProps,
+                mapStateToProps,
+                mapMessageToState,
+                mapEventToState,
+            )
+        }
+    }
+
+    function createWebSocketSubscription<StateType, ComputedPropType>(
+        initState: StateType,
+        fallbackProps: ComputedPropType,
+        mapStateToProps: StateToPropMapper<
+            StateType,
+            ComputedPropType,
+            WebSocketType
+        >,
+        mapMessageToState: (
+            message: IMessageEvent<WebSocketType>,
+        ) => StateType | null,
+        mapEventToState: (event: EventTypes) => StateType | null = _ => null,
+    ) {
+        return function withWebSocketSubscription<InheritPropType>(
+            Component: React.ComponentType<InheritPropType>,
+        ): React.ComponentType<Delta<InheritPropType, ComputedPropType>> {
+            const withSubscription = createSubscription<
+                StateType,
+                ComputedPropType
+            >(
+                initState,
+                fallbackProps,
+                mapStateToProps,
+                mapMessageToState,
+                mapEventToState,
+            )
+
+            return withWebSocket(withSubscription(Component))
+        }
+    }
+
     return {
-        WebsocketContext,
-        WebsocketContextConsumer,
-        WebsocketContextProvider,
-        withWebsocket,
-        withSubscription,
+        WebSocketContext,
+        WebSocketContextConsumer,
+        WebSocketContextProvider,
+        withWebSocket,
+        createSubscription,
+        createWebSocketSubscription,
+        subscribe,
     }
 }
