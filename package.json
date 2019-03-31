@@ -1,7 +1,7 @@
 {
     "name": "react-with-websocket",
-    "version": "3.0.0",
-    "description": "Higher order compoments for better experience in React with websocket.",
+    "version": "3.0.3",
+    "description": "Higher order components for better experience in React with websocket.",
     "author": "Librazy",
     "maintainers": [
         "Liqueur Librazy <librazy0598@gmail.com> (https://im.librazy.org/)"
