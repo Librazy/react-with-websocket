@@ -1,7 +1,7 @@
 workflow "Auto Publish" {
   on = "push"
   resolves = [
-    "Yarn Publish"
+    "Yarn Publish",
   ]
 }
 
@@ -35,6 +35,7 @@ action "Write npmrc" {
   needs = ["Yarn Build Example", "Yarn Build"]
   runs = "sh"
   args = "-c \"cat //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc\""
+  secrets = ["NPM_TOKEN"]
 }
 
 action "Yarn Publish" {
