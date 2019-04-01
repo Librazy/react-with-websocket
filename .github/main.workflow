@@ -33,8 +33,7 @@ action "Yarn Build Example" {
 action "Write npmrc" {
   uses = "docker://node:10"
   needs = ["Yarn Build Example", "Yarn Build"]
-  runs = "sh"
-  args = "-c \"echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc\""
+  runs = ["sh", "-c", "echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc"]
   secrets = ["NPM_TOKEN"]
 }
 
