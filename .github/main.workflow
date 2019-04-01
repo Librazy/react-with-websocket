@@ -34,7 +34,7 @@ action "Write npmrc" {
   uses = "docker://node:10"
   needs = ["Yarn Build Example", "Yarn Build"]
   runs = "sh"
-  args = "-c \"cat //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc\""
+  args = "-c \"echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc\""
   secrets = ["NPM_TOKEN"]
 }
 
