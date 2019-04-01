@@ -1,19 +1,12 @@
 workflow "Auto Publish" {
   on = "push"
   resolves = [
-    "Yarn Build",
-    "Yarn Build Example",
+    "Yarn Publish"
   ]
-}
-
-action "Filters for GitHub Actions" {
-  uses = "actions/bin/filter@master"
-  args = "tag v*"
 }
 
 action "Yarn" {
   uses = "docker://node:10"
-  needs = ["Filters for GitHub Actions"]
   runs = "yarn"
 }
 
@@ -26,16 +19,15 @@ action "Yarn Build" {
 
 action "Yarn Example" {
   uses = "docker://node:10"
-  needs = ["Filters for GitHub Actions"]
-  runs = "sh"
-  args = "-c \"cd example && yarn\""
+  runs = "yarn"
+  args = "example"
 }
 
 action "Yarn Build Example" {
   uses = "docker://node:10"
   needs = ["Yarn Example", "Yarn Build"]
-  runs = "sh"
-  args = "-c \"cd example && yarn build\""
+  runs = "yarn"
+  args = "build-example"
 }
 
 action "Write npmrc" {
@@ -49,5 +41,5 @@ action "Yarn Publish" {
   uses = "docker://node:10"
   needs = ["Write npmrc"]
   runs = "yarn"
-  args = "publish --non-interactive --new-version `git describe --exact-match --tags`"
+  args = "publish --non-interactive"
 }

@@ -1,6 +1,6 @@
 {
     "name": "react-with-websocket",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "description": "Higher order components for better experience in React with websocket.",
     "author": "Librazy",
     "maintainers": [
@@ -31,7 +31,10 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "prepare": "yarn run rimraf ./dist && yarn run build"
+        "prepare": "yarn run rimraf ./dist && yarn run build",
+        "example": "cd ./example && yarn && cd ..",
+        "build-example": "cd ./example && yarn run build && cd ..",
+        "start-example": "cd ./example && yarn start && cd .."
     },
     "peerDependencies": {
         "react": "^16.8.6",
