@@ -2,6 +2,7 @@ workflow "Auto Publish" {
   on = "push"
   resolves = [
     "Yarn Publish",
+    "FOSSA",
   ]
 }
 
@@ -30,9 +31,15 @@ action "Yarn Build Example" {
   args = "build-example"
 }
 
+action "Filters for GitHub Actions" {
+  uses = "actions/bin/filter@master"
+  needs = ["Yarn Build Example"]
+  args = "branch release"
+}
+
 action "Write npmrc" {
   uses = "docker://node:10"
-  needs = ["Yarn Build Example", "Yarn Build"]
+  needs = ["Filters for GitHub Actions"]
   runs = ["sh", "-c", "echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc"]
   secrets = ["NPM_TOKEN"]
 }
@@ -42,4 +49,9 @@ action "Yarn Publish" {
   needs = ["Write npmrc"]
   runs = "yarn"
   args = "publish --non-interactive"
+}
+
+action "FOSSA" {
+  uses = "./.github/actions/fossa/"
+  secrets = ["FOSSA_API_KEY"]
 }
