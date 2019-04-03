@@ -33,7 +33,7 @@ action "Yarn Build Example" {
 
 action "Filters for GitHub Actions" {
   uses = "actions/bin/filter@master"
-  needs = ["Yarn Build Example"]
+  needs = ["Yarn Build Example", "FOSSA"]
   args = "branch release"
 }
 
@@ -53,5 +53,6 @@ action "Yarn Publish" {
 
 action "FOSSA" {
   uses = "./.github/actions/fossa/"
+  needs = ["Yarn Example", "Yarn Build"]
   secrets = ["FOSSA_API_KEY"]
 }

@@ -16,4 +16,4 @@ COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["fossa", "analyze"]
+CMD ["fossa", "test"]
