@@ -16,4 +16,4 @@ COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["fossa", "test"]
+CMD ["./.github/actions/fossa/run.sh"]
