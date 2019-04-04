@@ -54,4 +54,4 @@ Then, you can use `ComponentWithWebSocketSubscription` in place of `Component` w
 
 For convenient, `createWebSocketSubscription` works as `createSubscription` then `withWebSocket`.
 
-[![FOSSA Status](https://app.fossa.io/api/projects/custom%2B5289%2Fgit%40github.com%3ALibrazy%2Freact-with-websocket.git.svg?type=shield)](https://app.fossa.io/projects/custom%2B5289%2Fgit%40github.com%3ALibrazy%2Freact-with-websocket.git?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.io/api/projects/custom%2B5289%2Fgit%40github.com%3ALibrazy%2Freact-with-websocket.git.svg?type=large)](https://app.fossa.io/projects/custom%2B5289%2Fgit%40github.com%3ALibrazy%2Freact-with-websocket.git?ref=badge_large)
