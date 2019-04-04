@@ -1,10 +1,13 @@
 # React withWebSocket
 
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B5289%2Fgithub.com%2FLibrazy%2Freact-with-websocket.svg?type=shield)](https://app.fossa.com/projects/custom%2B5289%2Fgithub.com%2FLibrazy%2Freact-with-websocket?ref=badge_shield)
+
 Higher order components for better experience in React with websocket.
 
 ## Usage (with `WebSocket` from browser)
 
-First, create a `WebSocket` object (for example, `ws`) in your (lower as possible) common ancestor of Components that require data from WebSocket, and wrap its children with a `<WebSocketContextProvider value={ws}>`.  
+First, create a `WebSocket` object (for example, `ws`) in your (lower as possible) common ancestor of Components that require data from WebSocket, and wrap its children with a `<WebSocketContextProvider value={ws}>`.
+
 That will be the source of WebSocket for those Components.
 
 For each Component, we need to:
