@@ -1,7 +1,5 @@
 # React withWebSocket
 
-[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B5289%2Fgithub.com%2FLibrazy%2Freact-with-websocket.svg?type=shield)](https://app.fossa.com/projects/custom%2B5289%2Fgithub.com%2FLibrazy%2Freact-with-websocket?ref=badge_shield)
-
 Higher order components for better experience in React with websocket.
 
 ## Usage (with `WebSocket` from browser)
@@ -55,3 +53,5 @@ const ComponentWithWebSocketSubscription = withWebSocket(Component)
 Then, you can use `ComponentWithWebSocketSubscription` in place of `Component` with some props subscribed to WebSocket.
 
 For convenient, `createWebSocketSubscription` works as `createSubscription` then `withWebSocket`.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/custom%2B5289%2Fgit%40github.com%3ALibrazy%2Freact-with-websocket.git.svg?type=shield)](https://app.fossa.io/projects/custom%2B5289%2Fgit%40github.com%3ALibrazy%2Freact-with-websocket.git?ref=badge_shield)
