@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.11",
-    "@types/node": "^11.11.8",
+    "@types/node": "^11.13.0",
     "react-scripts": "^2.1.8",
     "react-with-websocket": "link:.."
   },
@@ -25,6 +25,6 @@
   ],
   "devDependencies": {
     "@types/lodash": "^4.14.123",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.4.1"
   }
 }
