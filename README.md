@@ -2,6 +2,8 @@
 
 Higher order components for better experience in React with websocket.
 
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=Librazy/react-with-websocket)](https://dependabot.com)
+
 ## Usage (with `WebSocket` from browser)
 
 First, create a `WebSocket` object (for example, `ws`) in your (lower as possible) common ancestor of Components that require data from WebSocket, and wrap its children with a `<WebSocketContextProvider value={ws}>`.
