@@ -2,7 +2,6 @@ workflow "Auto Publish" {
   on = "push"
   resolves = [
     "Yarn Publish",
-    "FOSSA",
   ]
 }
 
@@ -33,7 +32,7 @@ action "Yarn Build Example" {
 
 action "Filters for GitHub Actions" {
   uses = "actions/bin/filter@master"
-  needs = ["Yarn Build Example", "FOSSA"]
+  needs = ["Yarn Build Example"]
   args = "branch release"
 }
 
@@ -49,10 +48,4 @@ action "Yarn Publish" {
   needs = ["Write npmrc"]
   runs = "yarn"
   args = "publish --non-interactive"
-}
-
-action "FOSSA" {
-  uses = "./.github/actions/fossa/"
-  needs = ["Yarn Example", "Yarn Build"]
-  secrets = ["FOSSA_API_KEY"]
 }
