@@ -6,31 +6,31 @@ workflow "Auto Publish" {
 }
 
 action "Yarn" {
-  uses = "docker://node:10"
+  uses = "docker://node:12"
   runs = "yarn"
 }
 
 action "Yarn Build" {
-  uses = "docker://node:10"
+  uses = "docker://node:12"
   needs = ["Yarn"]
   runs = "yarn"
   args = "build"
 }
 
 action "Yarn Example" {
-  uses = "docker://node:10"
+  uses = "docker://node:12"
   runs = "yarn"
   args = "example"
 }
 
 action "Yarn Build Example" {
-  uses = "docker://node:10"
+  uses = "docker://node:12"
   needs = ["Yarn Example", "Yarn Build"]
   runs = "yarn"
   args = "build-example"
 }
 
-action "Filters for GitHub Actions" {
+action "Filters Release Branch" {
   uses = "actions/bin/filter@master"
   needs = ["Yarn Build Example"]
   args = "branch release"
@@ -44,7 +44,7 @@ action "Write npmrc" {
 }
 
 action "Yarn Publish" {
-  uses = "docker://node:10"
+  uses = "docker://node:12"
   needs = ["Write npmrc"]
   runs = "yarn"
   args = "publish --non-interactive"
