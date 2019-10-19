@@ -1,4 +1,4 @@
-workflow "Auto Publish" {
+workflow "Build And Publish" {
   on = "push"
   resolves = [
     "Yarn Publish",
